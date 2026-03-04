@@ -1,0 +1,35 @@
+﻿@inherits LayoutComponentBase
+@inject IStringLocalizer<SharedResource> L
+@inject CultureService Culture
+@inject ThemeService Theme
+@inject TableHubClient Hub
+
+<div class="app-shell">
+    <header class="app-header">
+        <div class="app-title">@L["App_Title"]</div>
+        <div class="app-controls">
+            <div class="control">
+                <span class="label">@L["Label_Language"]</span>
+                <button class="btn btn-sm btn-outline-light" @onclick='() => ChangeCultureAsync("en")'>@L["Lang_EN"]</button>
+                <button class="btn btn-sm btn-outline-light" @onclick='() => ChangeCultureAsync("bg")'>@L["Lang_BG"]</button>
+            </div>
+            <div class="control">
+                <span class="label">@L["Label_Theme"]</span>
+                <span class="value">@Theme.ActiveThemeName</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-main">
+        @Body
+    </main>
+</div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await Hub.EnsureStartedAsync();
+    }
+
+    private Task ChangeCultureAsync(string culture) => Culture.ChangeCultureAsync(culture);
+}

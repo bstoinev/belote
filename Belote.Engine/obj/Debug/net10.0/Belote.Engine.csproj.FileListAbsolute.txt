@@ -1,0 +1,11 @@
+W:\Belote\Belote.Engine\bin\Debug\net10.0\Belote.Engine.deps.json
+W:\Belote\Belote.Engine\bin\Debug\net10.0\Belote.Engine.dll
+W:\Belote\Belote.Engine\bin\Debug\net10.0\Belote.Engine.pdb
+W:\Belote\Belote.Engine\obj\Debug\net10.0\Belote.Engine.GeneratedMSBuildEditorConfig.editorconfig
+W:\Belote\Belote.Engine\obj\Debug\net10.0\Belote.Engine.AssemblyInfoInputs.cache
+W:\Belote\Belote.Engine\obj\Debug\net10.0\Belote.Engine.AssemblyInfo.cs
+W:\Belote\Belote.Engine\obj\Debug\net10.0\Belote.Engine.csproj.CoreCompileInputs.cache
+W:\Belote\Belote.Engine\obj\Debug\net10.0\Belote.Engine.dll
+W:\Belote\Belote.Engine\obj\Debug\net10.0\refint\Belote.Engine.dll
+W:\Belote\Belote.Engine\obj\Debug\net10.0\Belote.Engine.pdb
+W:\Belote\Belote.Engine\obj\Debug\net10.0\ref\Belote.Engine.dll

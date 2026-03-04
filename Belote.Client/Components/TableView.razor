@@ -1,0 +1,260 @@
+@inject TableHubClient Hub
+@inject ThemeService Theme
+@inject IStringLocalizer<SharedResource> L
+
+@implements IDisposable
+
+@if (Hub.Snapshot is null)
+{
+    <div class="status">@L["Status_Connecting"]</div>
+}
+else
+{
+    var snapshot = Hub.Snapshot;
+    var hand = snapshot!.Hand;
+
+    <div class="table-root" style="background-image: url('@Theme.TableBackgroundPath')">
+        <div class="hud">
+            <div class="hud-row">
+                <div><strong>@L["Label_Table"]</strong> @snapshot.TableId</div>
+                <div><strong>@L["Label_Phase"]</strong> @PhaseText(hand.Phase)</div>
+                <div><strong>@L["Label_Contract"]</strong> @ContractText(hand.HighestContract)</div>
+                <div><strong>@L["Label_Doubling"]</strong> @DoublingText(hand.Doubling)</div>
+            </div>
+            <div class="hud-row">
+                <div><strong>@L["Label_Dealer"]</strong> @SeatText(hand.Dealer)</div>
+                <div><strong>@L["Label_Cutter"]</strong> @SeatText(hand.Cutter)</div>
+                <div><strong>@L["Label_Eldest"]</strong> @SeatText(hand.Eldest)</div>
+                <div><strong>@L["Label_Turn"]</strong> @SeatText(hand.Turn)</div>
+            </div>
+        </div>
+
+        @foreach (var seat in Enum.GetValues<Seat>())
+        {
+            var info = snapshot.Seats[seat];
+            var isTurn = seat == hand.Turn && hand.Phase is BeloteHandPhase.AwaitingCut or BeloteHandPhase.Bidding or BeloteHandPhase.Playing;
+            var markers = new List<string>();
+            if (seat == hand.Dealer) markers.Add(L["Marker_Dealer"]);
+            if (seat == hand.Cutter) markers.Add(L["Marker_Cutter"]);
+            if (seat == hand.Eldest) markers.Add(L["Marker_Eldest"]);
+
+            <div class="seat seat-@seat.ToString().ToLowerInvariant() @(isTurn ? "turn" : "")">
+                <div class="seat-header">
+                    <img class="avatar" src="@info.AvatarUrl" alt="avatar" />
+                    <div class="meta">
+                        <div class="nick">@info.Nickname</div>
+                        <div class="sub">
+                            <span class="badge">@((info.IsRobot ? L["Badge_Robot"] : L["Badge_Human"]))</span>
+                            <span class="rating">@L["Label_Rating"] @info.Rating</span>
+                            <span class="conn">@((info.IsConnected ? L["Conn_Online"] : L["Conn_Offline"]))</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="seat-markers">@string.Join(" • ", markers)</div>
+                <div class="hand">
+                    @if (hand.Hands.TryGetValue(seat, out var cards))
+                    {
+                        foreach (var c in cards)
+                        {
+                            <img class="card" src="@Theme.CardFacePath(c)" alt="@CardAlt(c)" />
+                        }
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="center">
+            <div class="trick-title">@L["Label_CurrentTrick"] (@hand.CurrentTrick.Count/4)</div>
+            <div class="trick">
+                @foreach (var pc in hand.CurrentTrick)
+                {
+                    <div class="trick-card">
+                        <img class="card" src="@Theme.CardFacePath(pc.Card)" alt="@CardAlt(pc.Card)" />
+                        <div class="trick-seat">@SeatText(pc.Seat)</div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <aside class="side-panel">
+            <div class="panel">
+                <div class="panel-title">@L["Panel_Score"]</div>
+                <div class="score">
+                    <div class="score-row"><strong>@L["Team_NS"]</strong> @snapshot.Match.NorthSouthTotal / @snapshot.Match.Target</div>
+                    <div class="score-row"><strong>@L["Team_EW"]</strong> @snapshot.Match.EastWestTotal / @snapshot.Match.Target</div>
+                </div>
+                @if (hand.Outcome is not null)
+                {
+                    <div class="score">
+                        <div class="score-row"><strong>@L["Label_HandAward"]</strong></div>
+                        <div class="score-row">@L["Team_NS"]: @hand.Outcome.NorthSouthAwardedPoints</div>
+                        <div class="score-row">@L["Team_EW"]: @hand.Outcome.EastWestAwardedPoints</div>
+                        <div class="score-row">@L["Label_Inside"]: @(hand.Outcome.InsideRuleApplied ? L["Yes"] : L["No"])</div>
+                    </div>
+                }
+                <div class="mt-2 d-flex gap-2">
+                    <button class="btn btn-sm btn-warning" @onclick="TogglePlayAsync">
+                        @(snapshot.IsPaused ? L["Button_Play"] : L["Button_Pause"])
+                    </button>
+                    <button class="btn btn-sm btn-primary" @onclick="ReplayAsync">@L["Button_ReplayLastHand"]</button>
+                </div>
+                @if (_replayResult is not null)
+                {
+                    <div class="replay">
+                        <div>@(_replayResult.Identical ? L["Replay_Identical"] : L["Replay_Different"])</div>
+                        <div class="mono">live: @_replayResult.LiveHash[..12]…</div>
+                        <div class="mono">repl: @_replayResult.ReplayHash[..12]…</div>
+                    </div>
+                }
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">@L["Panel_Chat"]</div>
+                <div class="chat-placeholder">@L["Chat_Placeholder"]</div>
+                <input class="form-control form-control-sm" disabled placeholder="@L["Chat_InputPlaceholder"]" />
+                <button class="btn btn-sm btn-secondary mt-1" disabled>@L["Chat_Send"]</button>
+            </div>
+        </aside>
+
+        <div class="bottom-logs">
+            <div class="panel log-panel">
+                <div class="panel-title">@L["Panel_BiddingLog"]</div>
+                <div class="log log-tall">
+                    @foreach (var e in hand.BiddingLog.TakeLast(20))
+                    {
+                        <div class="log-row">@BiddingEntryText(e)</div>
+                    }
+                </div>
+            </div>
+
+            <div class="panel log-panel">
+                <div class="panel-title">@L["Panel_ActionLog"]</div>
+                <div class="log log-tall">
+                    @foreach (var e in snapshot.Log.TakeLast(30))
+                    {
+                        <div class="log-row">@LogEntryText(e)</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private ReplayResultDto? _replayResult;
+
+    protected override void OnInitialized()
+    {
+        Hub.SnapshotChanged += OnSnapshotChanged;
+    }
+
+    public void Dispose()
+    {
+        Hub.SnapshotChanged -= OnSnapshotChanged;
+    }
+
+    private void OnSnapshotChanged() => InvokeAsync(StateHasChanged);
+
+    private string SeatText(Seat seat) => L[$"Seat_{seat}"];
+
+    private string PhaseText(BeloteHandPhase phase) => L[$"Phase_{phase}"];
+
+    private string DoublingText(Doubling doubling) => L[$"Doubling_{doubling}"];
+
+    private string ContractText(Contract? contract)
+    {
+        if (contract is null)
+        {
+            return L["Contract_None"];
+        }
+
+        return L[$"Contract_{contract.Value.Kind}"];
+    }
+
+    private string SuitText(Suit suit) => L[$"Suit_{suit}"];
+
+    private string RankText(Rank rank) => L[$"Rank_{rank}"];
+
+    private string CardAlt(Card card) => string.Format(L["Card_Alt"], RankText(card.Rank), SuitText(card.Suit));
+
+    private string BiddingEntryText(BidEntry entry)
+    {
+        var seat = SeatText(entry.Seat);
+        var text = entry.Action switch
+        {
+            "PASS" => string.Format(L["Bid_Pass"], seat),
+            "CUT" => string.Format(L["Bid_Cut"], seat),
+            "CONTRA" => string.Format(L["Bid_Contra"], seat),
+            "RECONTRA" => string.Format(L["Bid_Recontra"], seat),
+            "BID" when entry.Contract is not null => string.Format(L["Bid_Bid"], seat, ContractText(entry.Contract)),
+            _ => $"{seat}: {entry.Action}",
+        };
+
+        return text;
+    }
+
+    private string LogEntryText(TableLogEntryDto entry)
+    {
+        if (entry.Code == "HAND_START")
+        {
+            var dealer = entry.Parameters.GetValueOrDefault("dealer", "?");
+            var seed = entry.Parameters.GetValueOrDefault("seed", "?");
+            return string.Format(L["Log_HandStart"], L[$"Seat_{dealer}"], seed);
+        }
+
+        if (entry.Code == "MATCH_WON")
+        {
+            var winner = entry.Parameters.GetValueOrDefault("winner", "?") switch
+            {
+                "NS" => L["Team_NS"],
+                "EW" => L["Team_EW"],
+                _ => entry.Parameters.GetValueOrDefault("winner", "?"),
+            };
+
+            return string.Format(L["Log_MatchWon"], winner);
+        }
+
+        if (entry.Code.StartsWith("EVT_PLAY", StringComparison.Ordinal))
+        {
+            var seat = entry.Parameters.GetValueOrDefault("seat", "?");
+            var card = entry.Parameters.GetValueOrDefault("card", "?");
+            return string.Format(L["Log_Play"], L[$"Seat_{seat}"], card);
+        }
+
+        if (entry.Code.StartsWith("EVT_TRICK_WON", StringComparison.Ordinal))
+        {
+            var seat = entry.Parameters.GetValueOrDefault("seat", "?");
+            return string.Format(L["Log_TrickWon"], L[$"Seat_{seat}"]);
+        }
+
+        if (entry.Code.StartsWith("EVT_BELOTE", StringComparison.Ordinal))
+        {
+            var seat = entry.Parameters.GetValueOrDefault("seat", "?");
+            return string.Format(L["Log_Belote"], L[$"Seat_{seat}"]);
+        }
+
+        if (entry.Code.StartsWith("EVT_BID_MADE", StringComparison.Ordinal))
+        {
+            var seat = entry.Parameters.GetValueOrDefault("seat", "?");
+            var contract = entry.Parameters.GetValueOrDefault("contract", "?");
+            return string.Format(L["Log_BidMade"], L[$"Seat_{seat}"], L[$"Contract_{contract}"]);
+        }
+
+        return string.Format(L["Log_Unknown"], entry.Code);
+    }
+
+    private async Task ReplayAsync()
+    {
+        _replayResult = await Hub.ReplayLastHandAsync();
+    }
+
+    private async Task TogglePlayAsync()
+    {
+        if (Hub.Snapshot is null)
+        {
+            return;
+        }
+
+        await Hub.TogglePausedAsync();
+    }
+}

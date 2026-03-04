@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="App_Title" xml:space="preserve"><value>Белот (MVP)</value></data>
+  <data name="Status_Connecting" xml:space="preserve"><value>Свързване…</value></data>
+
+  <data name="Label_Language" xml:space="preserve"><value>Език</value></data>
+  <data name="Lang_EN" xml:space="preserve"><value>EN</value></data>
+  <data name="Lang_BG" xml:space="preserve"><value>BG</value></data>
+  <data name="Label_Theme" xml:space="preserve"><value>Тема</value></data>
+
+  <data name="Label_Table" xml:space="preserve"><value>Маса</value></data>
+  <data name="Label_Phase" xml:space="preserve"><value>Етап</value></data>
+  <data name="Label_Dealer" xml:space="preserve"><value>Раздава</value></data>
+  <data name="Label_Cutter" xml:space="preserve"><value>Реже</value></data>
+  <data name="Label_Eldest" xml:space="preserve"><value>Под ръка</value></data>
+  <data name="Label_Turn" xml:space="preserve"><value>Ред</value></data>
+  <data name="Label_Contract" xml:space="preserve"><value>Договор</value></data>
+  <data name="Label_Doubling" xml:space="preserve"><value>Контра</value></data>
+  <data name="Label_CurrentTrick" xml:space="preserve"><value>Текуща взятка</value></data>
+  <data name="Label_Rating" xml:space="preserve"><value>Рейтинг:</value></data>
+
+  <data name="Marker_Dealer" xml:space="preserve"><value>Раздава</value></data>
+  <data name="Marker_Cutter" xml:space="preserve"><value>Реже</value></data>
+  <data name="Marker_Eldest" xml:space="preserve"><value>Под ръка</value></data>
+
+  <data name="Badge_Robot" xml:space="preserve"><value>Робот</value></data>
+  <data name="Badge_Human" xml:space="preserve"><value>Човек</value></data>
+  <data name="Conn_Online" xml:space="preserve"><value>Онлайн</value></data>
+  <data name="Conn_Offline" xml:space="preserve"><value>Офлайн</value></data>
+
+  <data name="Seat_North" xml:space="preserve"><value>Север</value></data>
+  <data name="Seat_East" xml:space="preserve"><value>Изток</value></data>
+  <data name="Seat_South" xml:space="preserve"><value>Юг</value></data>
+  <data name="Seat_West" xml:space="preserve"><value>Запад</value></data>
+
+  <data name="Phase_AwaitingCut" xml:space="preserve"><value>Чака се рязане</value></data>
+  <data name="Phase_Bidding" xml:space="preserve"><value>Наддаване</value></data>
+  <data name="Phase_Playing" xml:space="preserve"><value>Игра</value></data>
+  <data name="Phase_CanceledAllPass" xml:space="preserve"><value>Всички пас (отказано)</value></data>
+  <data name="Phase_Completed" xml:space="preserve"><value>Приключено</value></data>
+
+  <data name="Doubling_None" xml:space="preserve"><value>Няма</value></data>
+  <data name="Doubling_Contra" xml:space="preserve"><value>Контра</value></data>
+  <data name="Doubling_Recontra" xml:space="preserve"><value>Реконтра</value></data>
+
+  <data name="Contract_None" xml:space="preserve"><value>—</value></data>
+  <data name="Contract_Clubs" xml:space="preserve"><value>Спатия</value></data>
+  <data name="Contract_Diamonds" xml:space="preserve"><value>Каро</value></data>
+  <data name="Contract_Hearts" xml:space="preserve"><value>Купа</value></data>
+  <data name="Contract_Spades" xml:space="preserve"><value>Пика</value></data>
+  <data name="Contract_NoTrump" xml:space="preserve"><value>Без коз</value></data>
+  <data name="Contract_AllTrump" xml:space="preserve"><value>Всичко коз</value></data>
+
+  <data name="Suit_Clubs" xml:space="preserve"><value>Спатия</value></data>
+  <data name="Suit_Diamonds" xml:space="preserve"><value>Каро</value></data>
+  <data name="Suit_Hearts" xml:space="preserve"><value>Купа</value></data>
+  <data name="Suit_Spades" xml:space="preserve"><value>Пика</value></data>
+
+  <data name="Rank_Seven" xml:space="preserve"><value>7</value></data>
+  <data name="Rank_Eight" xml:space="preserve"><value>8</value></data>
+  <data name="Rank_Nine" xml:space="preserve"><value>9</value></data>
+  <data name="Rank_Ten" xml:space="preserve"><value>10</value></data>
+  <data name="Rank_Jack" xml:space="preserve"><value>Вале</value></data>
+  <data name="Rank_Queen" xml:space="preserve"><value>Дама</value></data>
+  <data name="Rank_King" xml:space="preserve"><value>Поп</value></data>
+  <data name="Rank_Ace" xml:space="preserve"><value>Асо</value></data>
+
+  <data name="Card_Alt" xml:space="preserve"><value>{0} {1}</value></data>
+
+  <data name="Team_NS" xml:space="preserve"><value>С/Ю</value></data>
+  <data name="Team_EW" xml:space="preserve"><value>И/З</value></data>
+  <data name="Panel_Score" xml:space="preserve"><value>Резултат</value></data>
+  <data name="Label_HandAward" xml:space="preserve"><value>Точки за раздаване</value></data>
+  <data name="Label_Inside" xml:space="preserve"><value>Вътре</value></data>
+  <data name="Yes" xml:space="preserve"><value>Да</value></data>
+  <data name="No" xml:space="preserve"><value>Не</value></data>
+
+  <data name="Button_ReplayLastHand" xml:space="preserve"><value>Реплей на последното раздаване</value></data>
+  <data name="Button_Play" xml:space="preserve"><value>Старт</value></data>
+  <data name="Button_Pause" xml:space="preserve"><value>Стоп</value></data>
+  <data name="Replay_Identical" xml:space="preserve"><value>Реплеят е идентичен</value></data>
+  <data name="Replay_Different" xml:space="preserve"><value>Несъответствие при реплей</value></data>
+
+  <data name="Panel_BiddingLog" xml:space="preserve"><value>Наддавания</value></data>
+  <data name="Panel_ActionLog" xml:space="preserve"><value>Действия</value></data>
+  <data name="Panel_Chat" xml:space="preserve"><value>Чат</value></data>
+  <data name="Chat_Placeholder" xml:space="preserve"><value>Чатът е само загатнат за MVP (без история).</value></data>
+  <data name="Chat_InputPlaceholder" xml:space="preserve"><value>Напиши съобщение…</value></data>
+  <data name="Chat_Send" xml:space="preserve"><value>Изпрати</value></data>
+
+  <data name="Bid_Pass" xml:space="preserve"><value>{0}: Пас</value></data>
+  <data name="Bid_Cut" xml:space="preserve"><value>{0}: Рязане</value></data>
+  <data name="Bid_Contra" xml:space="preserve"><value>{0}: Контра</value></data>
+  <data name="Bid_Recontra" xml:space="preserve"><value>{0}: Реконтра</value></data>
+  <data name="Bid_Bid" xml:space="preserve"><value>{0}: {1}</value></data>
+
+  <data name="Log_HandStart" xml:space="preserve"><value>Ново раздаване: раздава {0}, seed {1}</value></data>
+  <data name="Log_MatchWon" xml:space="preserve"><value>Край на мача: {0}</value></data>
+  <data name="Log_Play" xml:space="preserve"><value>{0} играе {1}</value></data>
+  <data name="Log_TrickWon" xml:space="preserve"><value>Взятка: {0}</value></data>
+  <data name="Log_Belote" xml:space="preserve"><value>Белот: {0}</value></data>
+  <data name="Log_BidMade" xml:space="preserve"><value>{0} казва {1}</value></data>
+  <data name="Log_Unknown" xml:space="preserve"><value>Събитие: {0}</value></data>
+  <data name="NotFound_Title" xml:space="preserve"><value>Няма такава страница</value></data>
+  <data name="NotFound_Text" xml:space="preserve"><value>Търсената страница не съществува.</value></data>
+</root>

@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "ZUMTpqfe8ig=",
+  "success": true,
+  "projectFilePath": "W:\\Belote\\Belote.Server\\Belote.Server.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\bstoyneff\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\10.0.3\\microsoft.aspnetcore.components.webassembly.10.0.3.nupkg.sha512",
+    "C:\\Users\\bstoyneff\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.server\\10.0.3\\microsoft.aspnetcore.components.webassembly.server.10.0.3.nupkg.sha512",
+    "C:\\Users\\bstoyneff\\.nuget\\packages\\microsoft.aspnetcore.http.connections.client\\10.0.3\\microsoft.aspnetcore.http.connections.client.10.0.3.nupkg.sha512",
+    "C:\\Users\\bstoyneff\\.nuget\\packages\\microsoft.aspnetcore.signalr.client\\10.0.3\\microsoft.aspnetcore.signalr.client.10.0.3.nupkg.sha512",
+    "C:\\Users\\bstoyneff\\.nuget\\packages\\microsoft.aspnetcore.signalr.client.core\\10.0.3\\microsoft.aspnetcore.signalr.client.core.10.0.3.nupkg.sha512",
+    "C:\\Users\\bstoyneff\\.nuget\\packages\\microsoft.dotnet.hotreload.webassembly.browser\\10.0.103\\microsoft.dotnet.hotreload.webassembly.browser.10.0.103.nupkg.sha512",
+    "C:\\Users\\bstoyneff\\.nuget\\packages\\microsoft.jsinterop.webassembly\\10.0.3\\microsoft.jsinterop.webassembly.10.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
